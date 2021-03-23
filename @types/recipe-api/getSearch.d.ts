@@ -1,4 +1,5 @@
-import { Recipe } from "./recipe"
+import { NotFound } from "./notFound";
+import { Recipe } from "./recipe";
 
 // Request
 export type QueryParameter = {
@@ -10,7 +11,7 @@ export type QueryParameter = {
 };
 
 // Response
-export type APIResponse = {
+export type APISuccessResponse = {
   // 検索にヒットしたレシピ一覧
   recipes: Recipe[];
 
@@ -20,3 +21,4 @@ export type APIResponse = {
     prev?: string;
   };
 };
+export type APIResponse = APISuccessResponse | NotFound;

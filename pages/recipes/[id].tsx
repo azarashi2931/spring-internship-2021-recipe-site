@@ -127,7 +127,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: { state: { type: "LOADED", recipe: recipe } },
-    revalidate: 600,
+    revalidate: 120,
   };
 };
 

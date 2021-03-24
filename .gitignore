@@ -105,3 +105,6 @@ dist
 
 # Environment variable file
 .envrc
+
+# Output file
+out

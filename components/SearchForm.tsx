@@ -34,8 +34,6 @@ const SearchInput: NextPage<{
   }, [props.initialQuery]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("initial: " + props.initialQuery);
-    console.log("current: " + text);
     setText(event.target.value);
   };
 

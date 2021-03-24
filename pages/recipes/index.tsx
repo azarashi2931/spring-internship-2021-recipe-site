@@ -1,6 +1,6 @@
 import { ParsedUrlQuery } from "querystring";
-import React, { FC, useEffect, useState } from "react";
-import { NextPage, GetServerSideProps, NextPageContext } from "next";
+import React from "react";
+import { NextPage, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import * as RecipeAPI from "../../recipe-api/getRecipes";
 import {

@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+import React from "react";
+import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import * as GetRecipes from "../@types/recipe-api/getRecipes";
@@ -11,7 +12,7 @@ type Props = {
   next?: () => void;
 };
 
-export const RecipeList: FC<Props> = (props) => {
+export const RecipeList: NextPage<Props> = (props) => {
   return (
     <div>
       <ol className="recipeList">

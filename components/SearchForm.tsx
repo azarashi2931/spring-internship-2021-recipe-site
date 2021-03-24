@@ -1,4 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { QueryParameter } from "../@types/recipe-api/getSearch";
 
@@ -6,7 +7,7 @@ type Props = {
   initialQuery: string;
 };
 
-export const SearchForm: FC<Props> = (props) => {
+export const SearchForm: NextPage<Props> = (props) => {
   const router = useRouter();
 
   const updateQuery = (queryString: string) => {
@@ -22,7 +23,7 @@ export const SearchForm: FC<Props> = (props) => {
   );
 };
 
-const SearchInput: FC<{
+const SearchInput: NextPage<{
   initialQuery: string;
   queryChangeHandler: (query: string) => void;
 }> = (props) => {

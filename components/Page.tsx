@@ -1,11 +1,12 @@
-import React, { FC } from "react";
+import React from "react";
+import { NextPage } from "next";
 
 type Props = {
   previous?: () => void;
   next?: () => void;
 };
 
-export const Page: FC<Props> = (props) => {
+export const Page: NextPage<Props> = (props) => {
   const isPreviousExists = props.previous != null;
   const isNextExists = props.next != null;
   return (

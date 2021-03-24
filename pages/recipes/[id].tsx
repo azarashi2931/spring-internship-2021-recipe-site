@@ -11,18 +11,18 @@ import { Ingredients } from "../../components/Ingredients";
 
 type State =
   | {
-    type: "LOADING";
-  }
+      type: "LOADING";
+    }
   | {
-    type: "NOT_FOUND";
-  }
+      type: "NOT_FOUND";
+    }
   | {
-    type: "BAD_REQUEST";
-  }
+      type: "BAD_REQUEST";
+    }
   | {
-    type: "LOADED";
-    recipe: Recipe;
-  };
+      type: "LOADED";
+      recipe: Recipe;
+    };
 
 type Props = {
   state: State;

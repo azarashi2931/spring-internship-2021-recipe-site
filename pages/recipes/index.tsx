@@ -1,4 +1,6 @@
+import { ParsedUrlQuery } from "querystring";
 import React, { FC, useEffect, useState } from "react";
+import { NextPage, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import * as RecipeAPI from "../../recipe-api/getRecipes";
 import {
@@ -20,7 +22,9 @@ type State =
       response: APIResponse;
     };
 
-const TopPage: FC = () => {
+type Props = { state: State };
+
+const TopPage: NextPage<Props> = (props) => {
   const router = useRouter();
   const [state, setState] = useState<State>({ type: "LOADING" });
   const [query, setQuery] = useState<QueryParameter>({});
@@ -109,6 +113,47 @@ const TopPage: FC = () => {
       {body()}
     </div>
   );
+};
+
+const parseQuery = (parsedUrlQuery: ParsedUrlQuery): QueryParameter => {
+  if (parsedUrlQuery.page) {
+    const query = Number(parsedUrlQuery.page);
+    if (!query || isNaN(query)) {
+      console.error("invelid query parameter");
+      return {};
+    }
+
+    return { page: query };
+  }
+
+  if (parsedUrlQuery.id) {
+    const query = parsedUrlQuery.id;
+    if (!Array.isArray(query)) {
+      console.error("invelid query parameter");
+      return {};
+    }
+
+    return { id: query };
+  }
+
+  return {};
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  //parse query
+  const query = parseQuery(context.query);
+
+  //fetch API
+  try {
+    const res = await RecipeAPI.getRecipes(query);
+    return {
+      props: { state: { type: "LOADED", response: res } },
+      revalidate: 600,
+    };
+  } catch (error) {
+    console.error(error);
+    return { notFound: true };
+  }
 };
 
 export default TopPage;

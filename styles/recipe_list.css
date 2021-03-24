@@ -15,9 +15,8 @@
   padding: 5px;
   display: flex;
   align-items: center;
+  max-width: 300px;
 }
-
-
 
 .recipeListDescription {
   flex-grow: 6;

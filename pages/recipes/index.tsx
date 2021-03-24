@@ -1,6 +1,6 @@
 import { ParsedUrlQuery } from "querystring";
 import React, { FC, useEffect, useState } from "react";
-import { NextPage, GetServerSideProps } from "next";
+import { NextPage, GetServerSideProps, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import * as RecipeAPI from "../../recipe-api/getRecipes";
 import {
@@ -22,50 +22,12 @@ type State =
       response: APIResponse;
     };
 
-type Props = { state: State };
+type Props = { state: State; query: QueryParameter };
 
-const TopPage: NextPage<Props> = (props) => {
+const TopPage: NextPage<Props> = (props: Props) => {
   const router = useRouter();
-  const [state, setState] = useState<State>({ type: "LOADING" });
-  const [query, setQuery] = useState<QueryParameter>({});
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await RecipeAPI.getRecipes(query);
-        setState({ type: "LOADED", response: res });
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-  }, [query]);
-
-  useEffect(() => {
-    if (router.query.page) {
-      const query = Number(router.query.page);
-      if (!query || isNaN(query)) {
-        console.error("invelid query parameter");
-        return;
-      }
-
-      setQuery({ page: query });
-      return;
-    }
-
-    if (router.query.id) {
-      const query = router.query.id;
-      if (!Array.isArray(query)) {
-        console.error("invelid query parameter");
-        return;
-      }
-
-      setQuery({ id: query });
-      return;
-    }
-
-    setQuery({});
-    return;
-  }, [router.query.page, router.query.id]);
+  const state = props.state;
+  const query = props.query;
 
   const body = () => {
     switch (state.type) {
@@ -147,8 +109,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const res = await RecipeAPI.getRecipes(query);
     return {
-      props: { state: { type: "LOADED", response: res } },
-      revalidate: 600,
+      props: { state: { type: "LOADED", response: res }, query: query },
     };
   } catch (error) {
     console.error(error);

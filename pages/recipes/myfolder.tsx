@@ -15,8 +15,8 @@ const MyFolderPage: NextPage = () => {
       Array.from(res)
         .map((id) => id.toString())
         .join(",");
-    router.push("/recipes?" + query);
-  });
+    router.push("/recipes?" + query, router.asPath);
+  }, []);
 
   return (
     <div>

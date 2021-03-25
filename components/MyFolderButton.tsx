@@ -25,14 +25,11 @@ export const MyFolderButton: NextPage<Props> = (props) => {
   useEffect(() => {
     const set = fetchStorage();
     console.log("pass1");
-    if (set.has(props.id) === registerState)
-      return;
+    if (set.has(props.id) === registerState) return;
 
     console.log("pass2");
-    if (registerState)
-      set.add(props.id);
-    else
-      set.delete(props.id);
+    if (registerState) set.add(props.id);
+    else set.delete(props.id);
     const newJson = JSON.stringify(Array.from(set));
     localStorage.setItem(path, newJson);
   }, [registerState]);

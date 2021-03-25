@@ -19,7 +19,7 @@ type State =
       response: RecipeAPIType.APIResponse;
     };
 
-type QueryParameter = { page?: number; id?: string };
+type QueryParameter = { page: number; id?: string };
 type Props = { state: State; query: QueryParameter };
 
 const articlePerPage = 10;
@@ -37,16 +37,14 @@ const TopPage: NextPage<Props> = (props: Props) => {
         return <h2>Not Found</h2>;
       case "LOADED": {
         const previous = (() => {
-          if (pageQuery.page && pageQuery.id) {
-            const page = pageQuery.page - 1;
-            if (page <= 0) return undefined;
+          if (pageQuery.id) {
+            const newPage = pageQuery.page - 1;
+            if (newPage <= 0) return undefined;
 
-            const newQuery = { page: page, id: pageQuery.id };
+            const newQuery = { page: newPage, id: pageQuery.id };
             return (router: NextRouter) => {
               router.push({ pathname: "/recipes", query: newQuery });
             };
-          } else if (!pageQuery.page && pageQuery.id) {
-            return undefined;
           } else {
             const page = pageQuery.page ? pageQuery.page : 1;
             const newQuery: QueryParameter = { page: page - 1 };
@@ -59,18 +57,16 @@ const TopPage: NextPage<Props> = (props: Props) => {
         })();
 
         const next = (() => {
-          if (pageQuery.page && pageQuery.id) {
+          if (pageQuery.id) {
             const ids = pageQuery.id.split(",");
-            const page = pageQuery.page + 1;
+            const newPage = pageQuery.page + 1;
 
-            if ((page - 1) * articlePerPage >= ids.length) return undefined;
+            if ((newPage - 1) * articlePerPage >= ids.length) return undefined;
 
-            const newQuery = { page: page, id: pageQuery.id };
+            const newQuery = { page: newPage, id: pageQuery.id };
             return (router: NextRouter) => {
               router.push({ pathname: "/recipes", query: newQuery });
             };
-          } else if (!pageQuery.page && pageQuery.id) {
-            return undefined;
           } else {
             const page = pageQuery.page ? pageQuery.page : 1;
             const newQuery: QueryParameter = { page: page + 1 };
@@ -106,13 +102,13 @@ const TopPage: NextPage<Props> = (props: Props) => {
 };
 
 const parseQuery = (parsedUrlQuery: ParsedUrlQuery): QueryParameter => {
-  let res: QueryParameter = {};
+  let res: QueryParameter = { page: 1 };
 
   if (parsedUrlQuery.page) {
     const page = Number(parsedUrlQuery.page);
     if (!page || isNaN(page)) {
       console.error("invelid query parameter");
-      return {};
+      return { page: 1 };
     }
 
     res.page = page;
@@ -122,7 +118,7 @@ const parseQuery = (parsedUrlQuery: ParsedUrlQuery): QueryParameter => {
     const id = parsedUrlQuery.id;
     if (Array.isArray(id)) {
       console.error("invelid query parameter");
-      return {};
+      return { page: 1 };
     }
 
     res.id = id;

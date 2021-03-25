@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import NextHeader from "next/head";
 import Link from "next/link";
 import { SearchForm } from "./SearchForm";
-import { SiteTitle } from "../app-constants/site-data";
+import { SiteTitle } from "../lib/site-data";
 
 type Props = { initialQuery: string };
 

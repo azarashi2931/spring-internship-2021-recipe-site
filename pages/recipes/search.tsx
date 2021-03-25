@@ -97,7 +97,7 @@ const SearchPage: FC = () => {
 
         return (
           <RecipeList
-            response={state.response}
+            recipes={state.response.recipes}
             previous={previous}
             next={next}
           />

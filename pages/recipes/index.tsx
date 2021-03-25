@@ -56,7 +56,7 @@ const TopPage: NextPage<Props> = (props: Props) => {
 
         return (
           <RecipeList
-            response={state.response}
+            recipes={state.response.recipes}
             previous={previous}
             next={next}
           />
@@ -90,7 +90,7 @@ const parseQuery = (parsedUrlQuery: ParsedUrlQuery): QueryParameter => {
 
   if (parsedUrlQuery.id) {
     const query = parsedUrlQuery.id;
-    if (!Array.isArray(query)) {
+    if (Array.isArray(query)) {
       console.error("invelid query parameter");
       return {};
     }

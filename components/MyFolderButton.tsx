@@ -8,17 +8,33 @@ type Props = {
 type RegisterState = boolean;
 
 export const MyFolderButton: NextPage<Props> = (props) => {
-  const path = "/MyFolder/" + props.id.toString();
+  const path = "/MyFolder";
   const [registerState, setRegisterState] = useState<RegisterState>(false);
 
+  const fetchStorage = (): Set<number> => {
+    const json = localStorage.getItem(path);
+    const set = json ? new Set<number>(JSON.parse(json)) : new Set<number>();
+    return set;
+  };
+
   useEffect(() => {
-    const isMarked: RegisterState = Boolean(localStorage.getItem(path));
-    setRegisterState(isMarked);
+    const set = fetchStorage();
+    setRegisterState(set.has(props.id));
   }, []);
 
   useEffect(() => {
-    if (registerState) localStorage.setItem(path, true.toString());
-    else localStorage.removeItem(path);
+    const set = fetchStorage();
+    console.log("pass1");
+    if (set.has(props.id) === registerState)
+      return;
+
+    console.log("pass2");
+    if (registerState)
+      set.add(props.id);
+    else
+      set.delete(props.id);
+    const newJson = JSON.stringify(Array.from(set));
+    localStorage.setItem(path, newJson);
   }, [registerState]);
 
   return (

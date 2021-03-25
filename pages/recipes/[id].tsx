@@ -8,6 +8,7 @@ import { APIResponse } from "../../@types/recipe-api/getRecipesId";
 import { Header } from "../../components/Header";
 import { Steps } from "../../components/Steps";
 import { Ingredients } from "../../components/Ingredients";
+import { MyFolderButton } from "../../components/MyFolderButton";
 
 type State =
   | {
@@ -57,6 +58,8 @@ const RecipePage: NextPage<Props> = (props) => {
               />
             )}
 
+            <MyFolderButton id={state.recipe.id} />
+
             <div className="recipeMetadata">
               <p>{state.recipe.author.user_name}</p>
               <p>{state.recipe.published_at}</p>
@@ -94,7 +97,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       recipes = recipes.concat(res.recipes);
       next = res.links.next;
       i++;
-    } while (next && i <= 100);
+    } while (next && i <= 1);
   } catch (error) {
     console.error(error);
   }
@@ -127,7 +130,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: { state: { type: "LOADED", recipe: recipe } },
-    revalidate: 600,
+    revalidate: 120,
   };
 };
 

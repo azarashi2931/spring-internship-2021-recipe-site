@@ -2,8 +2,8 @@ type HttpMethod = "GET" | "POST" | "DELETE";
 const Protcol = "https://";
 
 /* eslint no-undef: 0 */
-const API_ENDPOINT_HOST = process.env.NEXT_PUBLIC_API_ENDPOINT_HOST;
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+const API_ENDPOINT_HOST = process.env.COOKPAD_SPRING_INTERN_API_ENDPOINT_HOST;
+const API_KEY = process.env.COOKPAD_SPRING_INTERN_API_KEY;
 
 export const fetchApi = async (
   method: HttpMethod,

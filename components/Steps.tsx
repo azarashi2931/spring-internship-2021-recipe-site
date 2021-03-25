@@ -1,8 +1,9 @@
-import React, { FC } from "react";
+import React from "react";
+import { NextPage } from "next";
 
 type Props = { steps: string[] };
 
-export const Steps: FC<Props> = (props) => {
+export const Steps: NextPage<Props> = (props) => {
   return (
     <div className="recipeSubsection">
       <h2>手順</h2>

@@ -1,21 +1,21 @@
-import React, { FC } from "react";
+import React from "react";
+import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import * as GetRecipes from "../@types/recipe-api/getRecipes";
-import * as SearchRecipes from "../@types/recipe-api/getSearch";
+import { Recipe } from "../@types/recipe-api/recipe";
 import { Page } from "./Page";
 
 type Props = {
-  response: GetRecipes.APIResponse | SearchRecipes.APISuccessResponse;
+  recipes: Recipe[];
   previous?: () => void;
   next?: () => void;
 };
 
-export const RecipeList: FC<Props> = (props) => {
+export const RecipeList: NextPage<Props> = (props) => {
   return (
     <div>
       <ol className="recipeList">
-        {props.response.recipes.map((recipe, i) => (
+        {props.recipes.map((recipe, i) => (
           <li key={i}>
             <article>
               <Link href={"/recipes/" + recipe.id.toString()}>

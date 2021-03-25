@@ -17,6 +17,9 @@ export const Header: NextPage<Props> = (props) => {
         <h1 className="title">{SiteTitle}</h1>
       </Link>
       <SearchForm initialQuery={props.initialQuery} />
+      <Link href="/recipes/myfolder">
+        <button>マイフォルダ</button>
+      </Link>
     </div>
   );
 };

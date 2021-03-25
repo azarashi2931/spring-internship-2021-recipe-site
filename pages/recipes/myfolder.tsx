@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { Recipe } from "../../@types/recipe-api/recipe";
 import { fetchStorage } from "../..//lib/myFolder";
 import { Header } from "../../components/Header";
 

@@ -9,6 +9,32 @@ type Props = {
   recipes: Recipe[];
   previous?: () => void;
   next?: () => void;
+  fetch: (index: number) => Promise<Recipe[]>;
+};
+
+const generateArticle = (recipe: Recipe) => {
+  return (
+    <article>
+      <Link href={"/recipes/" + recipe.id.toString()}>
+        <div className="recipeListItem">
+          <div className="recipeListImage">
+            <Image
+              src={recipe.image_url ? recipe.image_url : "/static/noimage.jpg"}
+              alt="レシピ画像"
+              className="recipeListImage"
+              width={1280}
+              height={720}
+            />
+          </div>
+
+          <div className="recipeListDescription">
+            <h2>{recipe.title}</h2>
+            <p>{recipe.description}</p>
+          </div>
+        </div>
+      </Link>
+    </article>
+  );
 };
 
 export const RecipeList: NextPage<Props> = (props) => {
@@ -16,32 +42,7 @@ export const RecipeList: NextPage<Props> = (props) => {
     <div>
       <ol className="recipeList">
         {props.recipes.map((recipe, i) => (
-          <li key={i}>
-            <article>
-              <Link href={"/recipes/" + recipe.id.toString()}>
-                <div className="recipeListItem">
-                  <div className="recipeListImage">
-                    <Image
-                      src={
-                        recipe.image_url
-                          ? recipe.image_url
-                          : "/static/noimage.jpg"
-                      }
-                      alt="レシピ画像"
-                      className="recipeListImage"
-                      width={300}
-                      height={150}
-                    />
-                  </div>
-
-                  <div className="recipeListDescription">
-                    <h2>{recipe.title}</h2>
-                    <p>{recipe.description}</p>
-                  </div>
-                </div>
-              </Link>
-            </article>
-          </li>
+          <li key={i}>{generateArticle(recipe)}</li>
         ))}
       </ol>
 

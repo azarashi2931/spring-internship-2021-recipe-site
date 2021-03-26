@@ -100,6 +100,14 @@ const SearchPage: FC = () => {
             recipes={state.response.recipes}
             previous={previous}
             next={next}
+            fetch={async (i: number) => {
+              const res = await RecipeAPI.searchRecipes({
+                keyword: query ? query.keyword : "",
+                page: i + 1,
+              });
+              if (res !== "NOT_FOUND") return res.recipes;
+              else return [];
+            }}
           />
         );
       }

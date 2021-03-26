@@ -55,6 +55,8 @@ const RecipePage: NextPage<Props> = (props) => {
                 className="recipeImage"
                 src={state.recipe.image_url}
                 alt="レシピ画像"
+                width={1280}
+                height={720}
               />
             )}
 

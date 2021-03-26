@@ -83,6 +83,10 @@ const TopPage: NextPage<Props> = (props: Props) => {
             recipes={state.response.recipes}
             previous={previous ? () => previous(router) : undefined}
             next={next ? () => next(router) : undefined}
+            fetch={async (i: number) =>
+              (await RecipeAPI.getRecipes({ page: i + 1, id: pageQuery.id }))
+                .recipes
+            }
           />
         );
       }

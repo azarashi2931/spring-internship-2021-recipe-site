@@ -53,6 +53,7 @@ const RecipePage: NextPage<Props> = (props) => {
             {state.recipe.image_url && (
               <img
                 className="recipeImage"
+                loading="lazy"
                 src={state.recipe.image_url}
                 alt="レシピ画像"
                 width={1280}
